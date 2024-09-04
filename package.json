@@ -1,0 +1,19 @@
+{
+  "name": "youtube_clone",
+  "version": "1.0.0",
+  "description": "youtube clone ",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zaryab",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
