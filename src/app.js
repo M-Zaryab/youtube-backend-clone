@@ -16,4 +16,7 @@ app.use(express.urlencoded({ exptended: true, limit: "16kb" })); // -> encode UR
 app.use(express.static("public"));
 app.use(cookieParser()); // -> Now you can Access cookies from server and perform CRUD operation on them
 
+import userRouter from "./routes/user.router.js";
+app.use("/api/v1/users", userRouter);
+
 export { app };
