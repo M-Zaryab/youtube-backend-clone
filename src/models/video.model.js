@@ -6,7 +6,7 @@ const videoSchema = new Schema(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
-    owner: { type: Schema.Types.ObjectId, ref: "user" },
+    owner: { type: Schema.Types.ObjectId, ref: "User" },
     videoFile: {
       type: String, // from cloudinary
       required: true,
@@ -33,4 +33,4 @@ const videoSchema = new Schema(
 
 videoSchema.plugin(mongooseAggregatePaginate);
 
-export const video = mongoose.model("video", videoSchema);
+export const Video = mongoose.model("Video", videoSchema);
