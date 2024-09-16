@@ -5,8 +5,8 @@ import { uploadOnCloundinary } from "../utils/cloudinary.js";
 import validateEmail from "../utils/validateEmail.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import jwt from "jsonwebtoken";
-import fs from "fs";
 import mongoose from "mongoose";
+import fs from "fs";
 
 const generateAccessTokenAndRefreshToken = async (userId) => {
   try {
@@ -193,7 +193,7 @@ const logoutUser = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(
     req.user._id,
     {
-      $set: { refreshToken: undefined },
+      $unset: { refreshToken: 1 },
     },
     { new: true }
   );
@@ -253,8 +253,6 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Failed to refresh access token");
   }
 });
-
-//////////////////////////////////////////////////////////////
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
   // --- Algorithm ---
@@ -482,6 +480,28 @@ const getWatchHistory = asyncHandler(async (req, res) => {
       )
     );
 });
+
+const uploadVideo = asyncHandler(async (req, res) => {
+  const videoLocalPath = req.file?.path;
+
+  if (!videoLocalPath) {
+    throw new ApiError(400, "Please upload a video. ");
+  }
+
+  const video = await uploadOnCloundinary(videoLocalPath);
+
+  if (!video) {
+    fs.unlink(videoLocalPath);
+    throw new ApiError(500, "Failed to upload the video. ");
+  }
+
+  res
+    .status(200)
+    .json(
+      new ApiResponse(200, { video: video.url }, "Video Uploaded Successflly.")
+    );
+});
+
 export {
   registerUser,
   loginUser,
@@ -494,4 +514,5 @@ export {
   updateUserCoverImage,
   getUserChannelProfile,
   getWatchHistory,
+  uploadVideo,
 };
