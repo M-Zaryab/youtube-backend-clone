@@ -169,6 +169,7 @@ const loginUser = asyncHandler(async (req, res) => {
     // Now can only be modified by server
     httpOnly: true, // By default cookies can be modified in frontend
     secure: true, // These properties will secure your cookies from being leaked
+    // secure: process.env.NODE_ENV === "production",
   };
 
   return res
@@ -201,6 +202,7 @@ const logoutUser = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
+    // secure: process.env.NODE_ENV === "production",
   };
 
   return res
@@ -236,6 +238,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     const options = {
       httpOnly: true,
       secure: true,
+      // secure: process.env.NODE_ENV === "production",
     };
 
     return res
